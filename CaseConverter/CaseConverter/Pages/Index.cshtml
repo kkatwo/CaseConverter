@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="whole">
+    <h2>Case converter</h2>
+
+    <div class="left_pane">
+        <textarea id="src_text" cols="78" rows="10"></textarea>
+    </div>
+    <button id="convert_button" type="button">変換</button>
+    <div class="right_pane">
+        <textarea id="dst_text" cols="78" rows="10"></textarea>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#src_text").keyup(function () {
+                let text = convert($(this).text());
+                $("#dst_text").text(text);
+
+                console.log('keyup', text);
+            });
+
+            $("#convert_button").click(function () {
+                let text = convert($("#src_text").text());
+                $("#dst_text").text(text);
+
+                console.log('convert_button click', text);
+            });
+
+
+            /*
+             * 変換関数
+             * param src
+             */
+            let convert = function (src) {
+                let splitedChars = src.split('');
+                let temp = "";
+                for (let i = 0; i < splitedChars.length; i++) {
+                    let lastChar = temp.slice(-1);
+                    let last2Char = temp.slice(-2);
+
+                    //  先頭以降かつ一個前の文字がスペース、改行、スプリッタ以外かつ大文字が見つかったら間に '_' を入れる
+                    if (i !== 0 &&
+                        lastChar !== "_" && lastChar !== " " && lastChar !== "\n" && lastChar !== "\r" && last2Char !== "\r\n" &&
+                        splitedChars[i] !== splitedChars[i].toLowerCase()) {
+                        temp += "_";
+                    }
+                    temp += splitedChars[i].toLowerCase();
+                }
+                return temp;
+            };
+        });
+    </script>
+}

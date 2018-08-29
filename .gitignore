@@ -3,3 +3,6 @@
 ################################################################################
 
 /CaseConverter/.vs/CaseConverter/DesignTimeBuild
+/CaseConverter/.vs
+/CaseConverter/CaseConverter/bin
+/CaseConverter/CaseConverter/obj
